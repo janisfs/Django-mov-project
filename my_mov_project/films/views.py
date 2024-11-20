@@ -3,11 +3,14 @@ from .forms import FilmForm
 from .models import Film
 
 
+def index(request):
+    return render(request, 'my_mov_project/index.html')
+
 
 # Create your views here.
 def films(request):
     films = Film.objects.all()
-    return render(request, 'my_mov_project/films.html', {'films': films})
+    return render(request, 'films/films.html', {'films': films})
 
 
 def add_film(request):
