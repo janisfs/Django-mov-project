@@ -9,17 +9,18 @@ def index(request):
 
 # Create your views here.
 def films(request):
-    films = Film.objects.all()
+    films = Film.objects.filter(image__isnull=False)
     return render(request, 'films/films.html', {'films': films})
 
 
 def add_film(request):
     error = ''
     if request.method == 'POST':
-        form = FilmForm(request.POST)
+        form = FilmForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('films')
+            error = 'Фильм успешно добавлен!'
+            return redirect('films:films')
     else:
         form = FilmForm()
     return render(request, 'films/add_film.html', {'form': form, 'errors': error})
